@@ -988,15 +988,15 @@
                 };
 
                 // Make the AJAX request to the API
-                fetch('https://nolaeatery.nirutahuma.com/api/save-reservation', {
+                fetch('http://localhost:8000/api/save-reservation', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json', // For JSON data
                         // Include the token
                     },
-                    mode:"no-cors",
+                    // mode:"no-cors",
                     body: JSON.stringify(formData) // Convert data to JSON
-                })
+                }).then((response) => response.json())
                     .then((response) => {
                         // Handle success
                         responseMessage.innerText = 'Reservation successfully saved! Thank you.';
