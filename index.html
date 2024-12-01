@@ -1145,21 +1145,7 @@
             <p id="responseMessage" style="margin-top: 20px; color: green;"></p>
         </section>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Fetch CSRF token from Laravel
-                fetch('http://localhost:8000/api/reservation', {
-                    method: 'GET',
-                    mode: 'no-cors'
-                })
-                    .then((response) => {
-                        // Store CSRF token in meta tag
-                        console.log(response)
-                    })
-                    .catch((error) => console.error('Failed to fetch reservation:', error));
-            });
-
-        </script>
+     
         <script>
             document.getElementById('reservationForm').addEventListener('submit', function (e) {
                 e.preventDefault(); // Prevent the form from submitting normally
@@ -1182,6 +1168,7 @@
                 // Make the AJAX request to the API
                 fetch('https://nolaeatery.nirutahuma.com/api/save-reservation', {
                     method: 'POST',
+                    mode: 'cors',
                     headers: {
                         'Content-Type': 'application/json', // For JSON data
                         // Include the token
