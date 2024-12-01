@@ -954,6 +954,21 @@
         </section>
 
         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Fetch CSRF token from Laravel
+                fetch('http://localhost:8000/api/reservation', {
+                    method: 'GET',
+                    mode: 'no-cors'
+                })
+                    .then((response) => {
+                        // Store CSRF token in meta tag
+                        console.log(response)
+                    })
+                    .catch((error) => console.error('Failed to fetch reservation:', error));
+            });
+
+        </script>
+        <script>
             document.getElementById('reservationForm').addEventListener('submit', function (e) {
                 e.preventDefault(); // Prevent the form from submitting normally
 
@@ -973,27 +988,18 @@
                 };
 
                 // Make the AJAX request to the API
-                fetch('https://nolaeatery.nirutahuma.com/api/save-reservation', {
+                fetch('http://localhost:8000/api/save-reservation', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json', // For JSON data
-                        'Access-Control-Allow-Origin': '*', // Allow any origin
-                        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // Allowed methods
-                        'Access-Control-Allow-Headers': 'Content-Type, Authorization', // Allowed headers
-                        'Access-Control-Allow-Credentials': 'true', // Include credentials if needed
+                        // Include the token
                     },
                     body: JSON.stringify(formData) // Convert data to JSON
-                })
+                }).then((response) => response.json())
                     .then((response) => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then((result) => {
                         // Handle success
                         responseMessage.innerText = 'Reservation successfully saved! Thank you.';
-                        console.log('Success:', result);
+                        console.log('Success:', response);
                     })
                     .catch((error) => {
                         // Handle error
